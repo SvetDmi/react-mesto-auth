@@ -58,9 +58,7 @@ function App() {
 
     React.useEffect(() => {
         api.getAllInfo()
-            .then(res => {
-                const cardsData = res[0];
-                const userData = res[1];
+            .then(([cardsData, userData]) => {
                 setCurrentUser(userData)
                 setCards(cardsData)
             })
@@ -138,7 +136,7 @@ function App() {
     React.useEffect(() => {
         setTitle('');
         setLink('');
-    }, []);
+    }, [isAddPlacePopupOpen]);
 
     function handleTitleChange(e) {
         setTitle(e.target.value);
@@ -158,14 +156,12 @@ function App() {
             name: card.name,
             alt: card.name
         })
-
     }
 
     // поставить-удалить лайк
 
     function handleCardLike(card) {
         const isLiked = card.likes.some(i => i._id === currentUser._id);
-
         api.changeLikeCardStatus(card._id, !isLiked)
             .then((newCard) => {
                 const newCards = cards.map((item) => item._id === card._id ? newCard : item);
@@ -257,8 +253,8 @@ function App() {
         localStorage.removeItem('jwt');
         setLoggedIn(false);
         setEmail('');
-        history.push('/sign-in')
-    };
+        history.push('/sign-in');
+    }
 
 
     // ПОПАПЫ

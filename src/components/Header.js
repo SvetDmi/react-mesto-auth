@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
-import logo from './logo.svg';
+import logo from '../images/logo.svg';
 
 function Header({ email, onLogout, isLogged }) {
 
